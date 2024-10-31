@@ -1,6 +1,3 @@
-
-
-/*global define:false */
 /**
  * Copyright 2012-2017 Craig Campbell
  *
@@ -22,7 +19,7 @@
  * @version 1.6.5
  * @url craig.is/killing/mice
  */
-const document = globalThis?.document;
+const globalDocument = globalThis?.document;
 /**
  * mapping of special keycodes to their corresponding keys
  *
@@ -417,7 +414,7 @@ function _getKeyInfo(combination, action) {
 }
 
 function _belongsTo(element, ancestor) {
-  if (element === null || element === document) {
+  if (element === null || element === globalDocument) {
     return false;
   }
 
@@ -431,7 +428,7 @@ function _belongsTo(element, ancestor) {
 function Mousetrap(targetElement) {
   var self = this;
 
-  targetElement = targetElement || document;
+  targetElement = targetElement || globalDocument;
 
   if (!(self instanceof Mousetrap)) {
     return new Mousetrap(targetElement);
@@ -1052,7 +1049,7 @@ Mousetrap.addKeycodes = function(object) {
  * This method is needed to allow the global mousetrap functions to work
  * now that mousetrap is a constructor function.
  */
-var documentMousetrap = Mousetrap(document);
+var documentMousetrap = new Mousetrap(document);
 for (var method in documentMousetrap) {
   if (method.charAt(0) !== '_') {
     Mousetrap[method] = (function(method) {
@@ -1065,6 +1062,6 @@ for (var method in documentMousetrap) {
 
 Mousetrap.addKeycodes({
     219: '219'
-}
+});
 
 export default Mousetrap;
