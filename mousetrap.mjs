@@ -431,10 +431,6 @@ export function Mousetrap(targetElement) {
 
   targetElement = targetElement || globalDocument;
 
-  if (!(self instanceof Mousetrap)) {
-    return new Mousetrap(targetElement);
-  }
-
   /**
    * element to attach key events to
    *
@@ -879,10 +875,11 @@ export function Mousetrap(targetElement) {
     }
   };
 
-  // start!
-  _addEvent(targetElement, 'keypress', _handleKeyEvent);
-  _addEvent(targetElement, 'keydown', _handleKeyEvent);
-  _addEvent(targetElement, 'keyup', _handleKeyEvent);
+  if (targetElement) {
+    _addEvent(targetElement, 'keypress', _handleKeyEvent);
+    _addEvent(targetElement, 'keydown', _handleKeyEvent);
+    _addEvent(targetElement, 'keyup', _handleKeyEvent);
+  }
 }
 
 /**

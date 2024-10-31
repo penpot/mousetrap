@@ -199,9 +199,6 @@
   function Mousetrap(targetElement) {
     var self = this;
     targetElement = targetElement || globalDocument;
-    if (!(self instanceof Mousetrap)) {
-      return new Mousetrap(targetElement);
-    }
     self.target = targetElement;
     self._callbacks = {};
     self._directMap = {};
@@ -360,9 +357,11 @@
         _bindSingle(combinations[i], callback, action);
       }
     };
-    _addEvent(targetElement, "keypress", _handleKeyEvent);
-    _addEvent(targetElement, "keydown", _handleKeyEvent);
-    _addEvent(targetElement, "keyup", _handleKeyEvent);
+    if (targetElement) {
+      _addEvent(targetElement, "keypress", _handleKeyEvent);
+      _addEvent(targetElement, "keydown", _handleKeyEvent);
+      _addEvent(targetElement, "keyup", _handleKeyEvent);
+    }
   }
   Mousetrap.prototype.bind = function(keys, callback, action) {
     var self = this;
