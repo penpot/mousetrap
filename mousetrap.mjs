@@ -51,7 +51,8 @@ var _MAP = {
   46: 'del',
   91: 'meta',
   93: 'meta',
-  224: 'meta'
+  224: 'meta',
+  219: '219'
 };
 
 /**
@@ -425,7 +426,7 @@ function _belongsTo(element, ancestor) {
   return _belongsTo(element.parentNode, ancestor);
 }
 
-function Mousetrap(targetElement) {
+export function Mousetrap(targetElement) {
   var self = this;
 
   targetElement = targetElement || globalDocument;
@@ -963,36 +964,6 @@ Mousetrap.prototype.reset = function() {
  * @param {Element} element
  * @return {boolean}
  */
-// Mousetrap.prototype.stopCallback = function(e, element) {
-//   var self = this;
-
-//   // if the element has the class "mousetrap" then no need to stop
-//   if ((' ' + element.className + ' ').indexOf(' mousetrap ') > -1) {
-//     return false;
-//   }
-
-//   if (_belongsTo(element, self.target)) {
-//     return false;
-//   }
-
-//   // Events originating from a shadow DOM are re-targetted and `e.target` is the shadow host,
-//   // not the initial event target in the shadow tree. Note that not all events cross the
-//   // shadow boundary.
-//   // For shadow trees with `mode: 'open'`, the initial event target is the first element in
-//   // the event’s composed path. For shadow trees with `mode: 'closed'`, the initial event
-//   // target cannot be obtained.
-//   if ('composedPath' in e && typeof e.composedPath === 'function') {
-//     // For open shadow trees, update `element` so that the following check works.
-//     var initialEventTarget = e.composedPath()[0];
-//     if (initialEventTarget !== e.target) {
-//       element = initialEventTarget;
-//     }
-//   }
-
-//   // stop for input, select, and textarea
-//   return element.tagName == 'INPUT' || element.tagName == 'SELECT' || element.tagName == 'TEXTAREA' || element.isContentEditable;
-// };
-
 Mousetrap.prototype.stopCallback = function (e, element, combo) {
   // if the element has the data attribute "mousetrap-dont-stop" then no need
   // to stop. It should be used like <div data-mousetrap-dont-stop>...</div>
@@ -1034,7 +1005,7 @@ Mousetrap.prototype.handleKey = function() {
 /**
  * allow custom key mappings
  */
-Mousetrap.addKeycodes = function(object) {
+export function addKeycodes(object) {
   for (var key in object) {
     if (object.hasOwnProperty(key)) {
       _MAP[key] = object[key];
@@ -1049,19 +1020,16 @@ Mousetrap.addKeycodes = function(object) {
  * This method is needed to allow the global mousetrap functions to work
  * now that mousetrap is a constructor function.
  */
-var documentMousetrap = new Mousetrap(document);
-for (var method in documentMousetrap) {
-  if (method.charAt(0) !== '_') {
-    Mousetrap[method] = (function(method) {
-      return function() {
-        return documentMousetrap[method].apply(documentMousetrap, arguments);
-      };
-    } (method));
-  }
-}
+var instance = new Mousetrap(globalDocument);
 
-Mousetrap.addKeycodes({
-    219: '219'
-});
+// for (var method in documentMousetrap) {
+//   if (method.charAt(0) !== '_') {
+//     Mousetrap[method] = (function(method) {
+//       return function() {
+//         return documentMousetrap[method].apply(documentMousetrap, arguments);
+//       };
+//     } (method));
+//   }
+// }
 
-export default Mousetrap;
+export default instance;

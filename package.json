@@ -7,24 +7,30 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha --reporter=nyan tests/test.mousetrap.js"
+    "test": "mocha --reporter=nyan tests/test.mousetrap.js",
+    "build:module": "esbuild --bundle --outfile=dist/mousetrap.mjs mousetrap.mjs --format=esm --minify",
+    "build:browser": "esbuild --bundle --outfile=dist/mousetrap.js mousetrap.mjs --minify",
+    "build": "yarn run build:module && yarn run build:browser"
   },
+  "packageManager": "yarn@4.3.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ccampbell/mousetrap.git"
+    "url": "git://github.com/penpot/mousetrap.git"
   },
   "keywords": [
     "keyboard",
     "shortcuts",
     "events"
   ],
-  "module": "mousetrap.mjs",
+  "module": "dist/mousetrap.mjs",
+  "browser": "dist/mousetrap.js",
   "author": "Craig Campbell",
   "license": "Apache-2.0 WITH LLVM-exception",
   "gitHead": "c202a0bd4967d5a3064f9cb376db51dec9345336",
   "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^4.2.0",
+    "esbuild": "^0.24.0",
     "grunt": "~1.0.3",
     "grunt-complexity": "~1.1.0",
     "jsdom": "^13.1.0",
