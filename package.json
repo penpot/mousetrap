@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "mocha --reporter=nyan tests/test.mousetrap.js",
-    "build:module": "esbuild --bundle --outfile=dist/mousetrap.mjs mousetrap.mjs --format=esm --minify",
-    "build:browser": "esbuild --bundle --outfile=dist/mousetrap.js mousetrap.mjs --minify",
+    "build:module": "esbuild --bundle --outfile=dist/mousetrap.mjs mousetrap.mjs --format=esm",
+    "build:browser": "esbuild --bundle --outfile=dist/mousetrap.js mousetrap.mjs",
     "build": "yarn run build:module && yarn run build:browser"
   },
   "packageManager": "yarn@4.3.1",

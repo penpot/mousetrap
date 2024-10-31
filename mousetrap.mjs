@@ -1022,14 +1022,14 @@ export function addKeycodes(object) {
  */
 var instance = new Mousetrap(globalDocument);
 
-// for (var method in documentMousetrap) {
-//   if (method.charAt(0) !== '_') {
-//     Mousetrap[method] = (function(method) {
-//       return function() {
-//         return documentMousetrap[method].apply(documentMousetrap, arguments);
-//       };
-//     } (method));
-//   }
-// }
+for (let method in instance) {
+  if (method.charAt(0) !== '_') {
+    Mousetrap[method] = (function(method) {
+      return function() {
+        return instance[method].apply(instance, arguments);
+      };
+    } (method));
+  }
+}
 
-export default instance;
+export default Mousetrap;
